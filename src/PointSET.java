@@ -4,9 +4,10 @@ import edu.princeton.cs.algs4.RectHV;
 import edu.princeton.cs.algs4.StdDraw;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 public class PointSET {
 
@@ -39,10 +40,10 @@ public class PointSET {
     public void draw() {
         // draw the points
         StdDraw.enableDoubleBuffering();
-        StdDraw.setXscale(-0.5, 1.5);
-        StdDraw.setYscale(-0.5, 1.5);
+        StdDraw.setXscale(0, 1);
+        StdDraw.setYscale(0, 1);
         StdDraw.setPenColor(Color.DARK_GRAY);
-        StdDraw.setPenRadius(.008f);
+        StdDraw.setPenRadius(0.008f);
         ptSet.forEach(p -> p.draw());
         StdDraw.show();
     }
@@ -50,15 +51,23 @@ public class PointSET {
     public Iterable<Point2D> range(RectHV rect) {
         if (rect == null)
             throw new NullPointerException();
-        return ptSet.stream().filter(rect::contains)
-                .collect(Collectors.toList());
+
+        List<Point2D> pts = new ArrayList<>();
+        for (Point2D p : ptSet)
+            if (rect.contains(p))
+                pts.add(p);
+        return pts;
     }
 
     public Point2D nearest(Point2D p) {
         if (p == null)
             throw new NullPointerException();
-        return ptSet.stream().min((p1, p2) ->
-                Double.compare(p1.distanceTo(p), p2.distanceTo(p))).get();
+
+        Point2D min = null;
+        for (Point2D pt : ptSet)
+            if (min == null || p.distanceTo(pt) < p.distanceTo(min))
+                min = pt;
+        return min;
     }
 
     public static void main(String[] args) {
@@ -71,17 +80,17 @@ public class PointSET {
         }
 
         StdDraw.setPenColor(Color.BLUE);
-        StdDraw.setPenRadius(.008f);
+        StdDraw.setPenRadius(0.008f);
         Point2D pt = new Point2D(0.7, 0.8);
         pt.draw();
 
         StdDraw.setPenColor(Color.RED);
-        StdDraw.setPenRadius(.008f);
+        StdDraw.setPenRadius(0.008f);
         RectHV rect = new RectHV(0.2, 0.1, 0.6, 1.1);
         rect.draw();
 
         StdDraw.setPenColor(Color.CYAN);
-        StdDraw.setPenRadius(.008f);
+        StdDraw.setPenRadius(0.008f);
         RectHV rect2 = new RectHV(0.0, 0.0, 1, 1);
         rect.draw();
 

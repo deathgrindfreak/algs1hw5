@@ -37,8 +37,8 @@ public class RangeSearchVisualizer {
             brute.insert(p);
         }
 
-        double x0 = 0.0, y0 = 0.0;      // initial endpoint of rectangle
-        double x1 = 0.0, y1 = 0.0;      // current location of mouse
+        double x0 = 0.6, y0 = 0.0;      // initial endpoint of rectangle
+        double x1 = 1.0, y1 = 0.6;      // current location of mouse
         boolean isDragging = false;     // is the user dragging a rectangle
 
         // draw the points
